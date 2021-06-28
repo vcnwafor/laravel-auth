@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,9 +35,9 @@ Route::group(['middleware' => ['web', 'activity', 'checkblocked']], function () 
     Route::get('/activation', ['as' => 'authenticated.activation-resend', 'uses' => 'App\Http\Controllers\Auth\ActivateController@resend']);
     Route::get('/exceeded', ['as' => 'exceeded', 'uses' => 'App\Http\Controllers\Auth\ActivateController@exceeded']);
 
-    // Socialite Register Routes
-    Route::get('/social/redirect/{provider}', ['as' => 'social.redirect', 'uses' => 'App\Http\Controllers\Auth\SocialController@getSocialRedirect']);
-    Route::get('/social/handle/{provider}', ['as' => 'social.handle', 'uses' => 'App\Http\Controllers\Auth\SocialController@getSocialHandle']);
+    // // Socialite Register Routes
+    // Route::get('/social/redirect/{provider}', ['as' => 'social.redirect', 'uses' => 'App\Http\Controllers\Auth\SocialController@getSocialRedirect']);
+    // Route::get('/social/handle/{provider}', ['as' => 'social.handle', 'uses' => 'App\Http\Controllers\Auth\SocialController@getSocialHandle']);
 
     // Route to for user to reactivate their user deleted account.
     Route::get('/re-activate/{token}', ['as' => 'user.reactivate', 'uses' => 'App\Http\Controllers\RestoreUserController@userReActivate']);
@@ -55,12 +56,85 @@ Route::group(['middleware' => ['auth', 'activated', 'activity', 'twostep', 'chec
 
     //  Homepage Route - Redirect based on user role is in controller.
     Route::get('/home', ['as' => 'public.home',   'uses' => 'App\Http\Controllers\UserController@index']);
+    Route::get('/qaqcs', ['as' => 'public.qaqcs',   'uses' => 'App\Http\Controllers\UserController@qaqc']);
+    Route::get('/sheets', ['as' => 'public.sheets',   'uses' => 'App\Http\Controllers\UserController@sheets']);
+    Route::get('/personnels', ['as' => 'public.personnels',   'uses' => 'App\Http\Controllers\UserController@personnels']);
+    Route::get('/configs', ['as' => 'public.configs',   'uses' => 'App\Http\Controllers\UserController@configs']);
+    Route::get('/assets', ['as' => 'public.assets',   'uses' => 'App\Http\Controllers\UserController@cassets']);
+    Route::get('/services', ['as' => 'public.services',   'uses' => 'App\Http\Controllers\UserController@services']);
+    Route::get('/projects', ['as' => 'public.projects',   'uses' => 'App\Http\Controllers\UserController@projects']);
+    Route::get('/reports', ['as' => 'public.reports',   'uses' => 'App\Http\Controllers\UserController@reports']);
+    Route::get('/procedures', ['as' => 'public.procedures',   'uses' => 'App\Http\Controllers\UserController@procedures']);
+
+
+    Route::post('/newsheet',['as' => 'service.newsheet', 'uses' => 'App\Http\Controllers\ServiceController@newsheet']);
+    Route::get('/downloadsheet/{file}',['as' => 'downloadsheet', 'uses' => 'App\Http\Controllers\ServiceController@downloadsheet']);
+    Route::delete('/destroysheet/{file}',['as' => 'destroysheet', 'uses' => 'App\Http\Controllers\ServiceController@destroysheet']);
+    Route::resource('service', 'App\Http\Controllers\ServiceController');
+
+    Route::resource('client', 'App\Http\Controllers\ClientController');
+
+    Route::post('/newpdoc',['as' => 'procedure.newpdoc', 'uses' => 'App\Http\Controllers\ProcedureController@newpdoc']);
+    Route::get('/downloadpdoc/{file}',['as' => 'downloadpdoc', 'uses' => 'App\Http\Controllers\ProcedureController@downloadpdoc']);
+    Route::delete('/destroypdoc/{file}',['as' => 'destroypdoc', 'uses' => 'App\Http\Controllers\ProcedureController@destroypdoc']);
+    Route::resource('procedure', 'App\Http\Controllers\ProcedureController');
+
+    Route::get('report/download', 'App\Http\Controllers\ReportController@download');
+    Route::resource('report', 'App\Http\Controllers\ReportController');
+
+    Route::post('/newservice',['as' => 'project.newservice', 'uses' => 'App\Http\Controllers\ProjectController@newservice']);
+    Route::get('/downloadservice/{file}',['as' => 'downloadservice', 'uses' => 'App\Http\Controllers\ProjectController@downloadservice']);
+    Route::delete('/destroyservice/{file}',['as' => 'destroyservice', 'uses' => 'App\Http\Controllers\ProjectController@destroyservice']);
+
+    Route::post('/newreport',['as' => 'project.newreport', 'uses' => 'App\Http\Controllers\ProjectController@newreport']);
+    Route::get('/downloadreport/{file}',['as' => 'downloadreport', 'uses' => 'App\Http\Controllers\ProjectController@downloadreport']);
+    Route::delete('/destroyreport/{file}',['as' => 'destroyreport', 'uses' => 'App\Http\Controllers\ProjectController@destroyreport']);
+
+    Route::post('/newpteam',['as' => 'project.newpteam', 'uses' => 'App\Http\Controllers\ProjectController@newpteam']);
+    Route::get('/downloadpteam/{file}',['as' => 'downloadpteam', 'uses' => 'App\Http\Controllers\ProjectController@downloadpteam']);
+    Route::delete('/destroypteam/{file}',['as' => 'destroypteam', 'uses' => 'App\Http\Controllers\ProjectController@destroypteam']);
+
+    Route::get('project/download', 'App\Http\Controllers\ProjectController@download');
+    Route::resource('project', 'App\Http\Controllers\ProjectController');
+
+    Route::get('tsheet/download', 'App\Http\Controllers\TsheetController@download');
+    Route::resource('tsheet', 'App\Http\Controllers\TsheetController');
+
+    Route::post('/newcertification',['as' => 'personnel.newcertification', 'uses' => 'App\Http\Controllers\PersonnelController@newcertification']);
+    Route::get('/downloadcertification/{file}',['as' => 'downloadcertification', 'uses' => 'App\Http\Controllers\PersonnelController@downloadcertification']);
+    Route::delete('/destroycertification/{file}',['as' => 'destroycertification', 'uses' => 'App\Http\Controllers\PersonnelController@destroycertification']);
+
+    Route::post('/newwork',['as' => 'personnel.newwork', 'uses' => 'App\Http\Controllers\PersonnelController@newwork']);
+    Route::get('/downloadwork/{file}',['as' => 'downloadwork', 'uses' => 'App\Http\Controllers\PersonnelController@downloadwork']);
+    Route::delete('/destroywork/{file}',['as' => 'destroywork', 'uses' => 'App\Http\Controllers\PersonnelController@destroywork']);
+
+    Route::resource('personnel', 'App\Http\Controllers\PersonnelController');
+
+
+    Route::get('/downloadasset/{file}',['as' => 'downloadasset', 'uses' => 'App\Http\Controllers\AssetController@downloadasset']);
+    Route::resource('asset', 'App\Http\Controllers\AssetController');
+
+    Route::get('sheet/download', 'App\Http\Controllers\SheetController@download');
+    Route::resource('sheet', 'App\Http\Controllers\SheetController');
 
     // Show users profile - viewable by other users.
     Route::get('profile/{username}', [
         'as'   => '{username}',
         'uses' => 'App\Http\Controllers\ProfilesController@show',
     ]);
+
+    Route::get('/download/{Attachment}', function($Attachment){
+        $name = $Attachment;
+
+        $file = Storage::disk('public')->get("uploads/services/sheets/".$Attachment);
+        $dray = explode('.',$Attachment);
+        $headers  = array(
+            'Content-Type: application/'.$dray[count($dray) - 1],
+        );
+
+        return Response::download($file, $name, $headers);
+    });
+
 });
 
 // Registered, activated, and is current user routes.
@@ -133,3 +207,6 @@ Route::group(['middleware' => ['auth', 'activated', 'role:admin', 'activity', 't
 });
 
 Route::redirect('/php', '/phpinfo', 301);
+
+
+

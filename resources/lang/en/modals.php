@@ -23,6 +23,30 @@ return [
     'edit_user__modal_text_confirm_title'   => 'Confirm Save',
     'edit_user__modal_text_confirm_message' => 'Please confirm your changes.',
 
+    'edit_procedure__modal_text_confirm_title' => 'Confirm Save?',
+    'edit_procedure__modal_text_confirm_message' => 'Please confirm your changes.',
+
+    'edit_asset__modal_text_confirm_title' => 'Confirm Save?',
+    'edit_asset__modal_text_confirm_message' => 'Please confirm your changes.',
+
+    'edit_service__modal_text_confirm_title' => 'Confirm Save?',
+    'edit_service__modal_text_confirm_message' => 'Please confirm your changes.',
+
+    'edit_personnel__modal_text_confirm_title' => 'Confirm Save?',
+    'edit_personnel__modal_text_confirm_message' => 'Please confirm your changes.',
+
+    'edit_client__modal_text_confirm_title' => 'Confirm Save?',
+    'edit_client__modal_text_confirm_message' => 'Please confirm your changes.',
+
+    'edit_report__modal_text_confirm_title' => 'Confirm Save?',
+    'edit_report__modal_text_confirm_message' => 'Please confirm your changes.',
+
+    'edit_sheet__modal_text_confirm_title' => 'Confirm Save?',
+    'edit_sheet__modal_text_confirm_message' => 'Please confirm your changes.',
+
+    'edit_project__modal_text_confirm_title' => 'Confirm Save?',
+    'edit_project__modal_text_confirm_message' => 'Please confirm your changes.',
+
     // Form Modal
     'form_modal_default_title'      => 'Confirm',
     'form_modal_default_message'    => 'Please Confirm',

@@ -16,6 +16,10 @@
   $("input").keyup(function() {
     checkChanged();
   });
+
+  $("textarea").keyup(function() {
+    checkChanged();
+  });
   $("select").change(function() {
     checkChanged();
   });
