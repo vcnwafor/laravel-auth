@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth', 'activated', 'activity', 'twostep', 'chec
     Route::get('/personnels', ['as' => 'public.personnels',   'uses' => 'App\Http\Controllers\UserController@personnels']);
     Route::get('/configs', ['as' => 'public.configs',   'uses' => 'App\Http\Controllers\UserController@configs']);
     Route::get('/assets', ['as' => 'public.assets',   'uses' => 'App\Http\Controllers\UserController@cassets']);
-    Route::get('/services', ['as' => 'public.services',   'uses' => 'App\Http\Controllers\UserController@services']);
+    //Route::get('/services', ['as' => 'public.services',   'uses' => 'App\Http\Controllers\UserController@services']);
     Route::get('/projects', ['as' => 'public.projects',   'uses' => 'App\Http\Controllers\UserController@projects']);
     Route::get('/reports', ['as' => 'public.reports',   'uses' => 'App\Http\Controllers\UserController@reports']);
     Route::get('/procedures', ['as' => 'public.procedures',   'uses' => 'App\Http\Controllers\UserController@procedures']);
