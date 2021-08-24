@@ -74,8 +74,8 @@
                                 </caption>
                                 <thead class="thead">
                                     <tr>
-                                        <th>{!! trans('servicesmanagement.services-table.id') !!}</th>
                                         <th>{!! trans('servicesmanagement.services-table.name') !!}</th>
+                                        <th>Parent</th>
                                         <th class="hidden-xs">{!! trans('servicesmanagement.services-table.description') !!}</th>
                                         <th class="hidden-xs">Procedures</th>
                                         <th class="hidden-xs">Sheets</th>
@@ -89,8 +89,8 @@
                                 <tbody id="users_table">
                                     @foreach($services as $service)
                                         <tr>
-                                            <td>{{$service->id}}</td>
                                             <td>{{$service->name}}</td>
+                                            <td>{{$service->parent != null ? $service->parent->name : ""}}</td>
                                             <td class="hidden-xs">{{$service->description}}</td>
                                             <td class="hidden-xs">{{$service->procedures->count()}}</td>
                                             <td class="hidden-xs">{{$service->sheets->count()}}</td>
@@ -101,7 +101,7 @@
                                             <td>
                                                 {!! Form::open(array('url' => 'service/' . $service->id, 'class' => '', 'data-toggle' => 'tooltip', 'title' => 'Delete')) !!}
                                                     {!! Form::hidden('_method', 'DELETE') !!}
-                                                    {!! Form::button(trans('servicesmanagement.buttons.delete'), array('class' => 'btn btn-danger btn-sm','type' => 'button', 'style' =>'width: 100%;' ,'data-toggle' => 'modal', 'data-target' => '#confirmDelete', 'data-title' => 'Delete User', 'data-message' => 'Are you sure you want to delete this service ?')) !!}
+                                                    {!! Form::button($service->parent == null ? trans('servicesmanagement.buttons.delete') : trans('servicesmanagement.buttons.delete-subservice'), array('class' => 'btn btn-danger btn-sm','type' => 'button', 'style' =>'width: 100%;' ,'data-toggle' => 'modal', 'data-target' => '#confirmDelete', 'data-title' => $service->parent != null ? 'Delete Sub-Service' : 'Service', 'data-message' => $service->parent != null ? 'Are you sure you want to delete this Sub-Service':'Are you sure you want to delete this service ?')) !!}
                                                 {!! Form::close() !!}
                                             </td>
                                             @endpermission

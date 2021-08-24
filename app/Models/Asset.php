@@ -19,6 +19,7 @@ class Asset extends Model
         'name',
         'description',
         'image',
+        'category',
         'location',
     ];
 

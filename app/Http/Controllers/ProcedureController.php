@@ -54,7 +54,7 @@ class ProcedureController extends Controller
         $pdoc['procedure_id'] = $request->input('procedure_id');
         $pdoc['name'] = $request->input('name');
         if ($request->file('image')) {
-            $fileName = time().'_'.$request->image->getClientOriginalName();
+            $fileName = time().'.'.$request->image->getClientOriginalExtension();
             $filePath = $request->file('image')->storeAs('uploads/procedure/pdocs', $fileName);
             $pdoc['image'] = $fileName;
         }
@@ -66,7 +66,7 @@ class ProcedureController extends Controller
 
     public function downloadpdoc($file){
         $name = $file;
-        $filepath = public_path("storage/uploads/procedure/pdocs/".$file);
+        $filepath = storage_path('app/public/uploads/procedure/pdocs/' . $file);
         $dray = explode('.',$filepath);
         $headers  = array(
             'Content-Type: application/'.$dray[count($dray) - 1],

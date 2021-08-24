@@ -63,7 +63,7 @@ class PersonnelController extends Controller
             $personnel['salary'] = $request->input('salary');
             $personnel['dob'] = $request->input('dob');
             if ($request->file('image')) {
-                $fileName = time().'_'.$request->image->getClientOriginalName();
+                $fileName = time().'.'.$request->image->getClientOriginalExtension();
                 $filePath = $request->file('image')->storeAs('uploads/personnels/images', $fileName);
                 $personnel['image'] = $fileName;
             }
@@ -102,7 +102,7 @@ class PersonnelController extends Controller
         $cert['description'] = $request->input('description');
         $cert['obtainedon'] = $request->input('obtainedon');
         if ($request->file('image')) {
-            $fileName = time().'_'.$request->image->getClientOriginalName();
+            $fileName = time().'.'.$request->image->getClientOriginalExtension();
             $filePath = $request->file('image')->storeAs('uploads/personnels/certifications', $fileName);
             $cert['image'] = $fileName;
         }
@@ -141,7 +141,7 @@ class PersonnelController extends Controller
         $work['startdate'] = $request->input('startdate');
         $work['enddate'] = $request->input('enddate');
         if ($request->file('image')) {
-            $fileName = time().'_'.$request->image->getClientOriginalName();
+            $fileName = time().'.'.$request->image->getClientOriginalExtension();
             $filePath = $request->file('image')->storeAs('uploads/personnels/works', $fileName);
             $work['image'] = $fileName;
         }
@@ -182,7 +182,7 @@ class PersonnelController extends Controller
         $pteam['startdate'] = $request->input('startdate');
         $pteam['enddate'] = $request->input('enddate');
         if ($request->file('image')) {
-            $fileName = time().'_'.$request->image->getClientOriginalName();
+            $fileName = time().'.'.$request->image->getClientOriginalExtension();
             $filePath = $request->file('image')->storeAs('uploads/personnels/pteams', $fileName);
             $pteam['image'] = $fileName;
         }
@@ -194,7 +194,7 @@ class PersonnelController extends Controller
 
     public function downloadpteam($file){
         $name = $file;
-        $filepath = public_path("storage/uploads/personnels/pteams/".$file);
+        $filepath = storage_path('app/public/uploads/personnels/pteams/' . $file);
         $dray = explode('.',$filepath);
         $headers  = array(
             'Content-Type: application/'.$dray[count($dray) - 1],

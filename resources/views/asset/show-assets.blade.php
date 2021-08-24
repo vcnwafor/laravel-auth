@@ -72,8 +72,8 @@
                                 </caption>
                                 <thead class="thead">
                                     <tr>
-                                        <th>{!! trans('assetsmanagement.assets-table.id') !!}</th>
                                         <th>{!! trans('assetsmanagement.assets-table.name') !!}</th>
+                                        <th>Category</th>
                                         <th class="hidden-xs">{!! trans('assetsmanagement.assets-table.description') !!}</th>
                                         <th class="hidden-xs">{!! trans('assetsmanagement.assets-table.location') !!}</th>
                                         <th class="hidden-sm hidden-xs hidden-md">{!! trans('assetsmanagement.assets-table.created') !!}</th>
@@ -86,8 +86,8 @@
                                 <tbody id="users_table">
                                     @foreach($assets as $asset)
                                         <tr>
-                                            <td>{{$asset->id}}</td>
                                             <td>{{$asset->name}}</td>
+                                            <td>{{$asset->category}}</td>
                                             <td class="hidden-xs">{{$asset->description}}</td>
                                             <td class="hidden-xs">{{$asset->location}}</td>
                                             <td class="hidden-sm hidden-xs hidden-md">{{$asset->created_at}}</td>

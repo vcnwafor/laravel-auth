@@ -43,7 +43,7 @@ class ClientController extends Controller
         $client = [];
         if($request->validated()) {
             if ($request->file('image')) {
-                $fileName = time().'_'.$request->image->getClientOriginalName();
+                $fileName = time().'.'.$request->image->getClientOriginalExtension();
                 $filePath = $request->file('image')->storeAs('uploads/clients/images', $fileName);
                 $asset['image'] = $fileName;
             }

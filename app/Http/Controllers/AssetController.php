@@ -44,12 +44,13 @@ class AssetController extends Controller
 
         if($request->validated()) {
             if ($request->file('image')) {
-                $fileName = time().'_'.$request->image->getClientOriginalName();
+                $fileName = time().'.'.$request->image->getClientOriginalExtension();
                 $filePath = $request->file('image')->storeAs('uploads/assets/images', $fileName);
                 $asset['image'] = $fileName;
             }
 
             $asset['name'] = $request->input('name');
+            $asset['category'] = $request->input('category');
             $asset['description'] = $request->input('description');
             $asset['location'] = $request->input('location');
             Asset::create($asset);
@@ -86,7 +87,21 @@ class AssetController extends Controller
      */
     public function update(AssetUpdateRequest $request, Asset $asset)
     {
+        if ($request->file('image')) {
+            $fileName = time().'.'.$request->image->getClientOriginalExtension();
+            $filePath = $request->file('image')->storeAs('uploads/assets/images', $fileName);
+            $asset->image = $fileName;
+        }
+
         $asset->update($request->validated());
+
+        // if($request->validated()) {
+
+        //     $asset['name'] = $request->input('name');
+        //     $asset['description'] = $request->input('description');
+        //     $asset['location'] = $request->input('location');
+        //     Asset::update($asset);
+        // }
 
         $request->session()->flash('asset.id', $asset->id);
 

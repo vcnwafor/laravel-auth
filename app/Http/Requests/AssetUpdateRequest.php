@@ -25,8 +25,6 @@ class AssetUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:650'],
-            'description' => ['string'],
-            'image' => ['string'],
             'location' => ['required', 'string', 'max:250'],
         ];
     }

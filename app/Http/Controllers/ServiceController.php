@@ -59,11 +59,20 @@ class ServiceController extends Controller
     {
 
         $nsheet = [];
+        if($request->input('type') == 'Sub-Service'){
+            $subservice = [];
+            $subservice['parent_id'] = $request->input('service_id');
+            $subservice['name'] = $request->input('name');
+            $service = Service::create($subservice);
+            return redirect()->route('service.show', compact('service'));
+        }
+
         $nsheet['service_id'] = $request->input('service_id');
         $nsheet['name'] = $request->input('name');
         $nsheet['type'] = $request->input('type');
         if ($request->file('image')) {
-            $fileName = time().'_'.$request->image->getClientOriginalName();
+            //$fileName = time().'_'.$request->image->getClientOriginalName();
+            $fileName = time().'.'.$request->image->getClientOriginalExtension();
             $filePath = $request->file('image')->storeAs('uploads/service/sheets', $fileName);
             $nsheet['image'] = $fileName;
         }
@@ -80,7 +89,8 @@ class ServiceController extends Controller
 
         //var_dump($file);
 
-        $filepath = public_path("storage/uploads/service/sheets/".$file);
+        //$filepath = public_path("storage/uploads/service/sheets/".$file);
+        $filepath = storage_path('app/public/uploads/service/sheets/' . $file);
         //var_dump($ifile);
         //$file = Storage::disk('public')->get(storage_path()."/uploads/service/sheets/".$file);
         $dray = explode('.',$filepath);

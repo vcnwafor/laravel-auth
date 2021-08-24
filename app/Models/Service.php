@@ -18,6 +18,7 @@ class Service extends Model
     protected $fillable = [
         'name',
         'description',
+        'parent_id',
     ];
 
     /**
@@ -28,6 +29,16 @@ class Service extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+    public function parent()
+    {
+        return $this->hasOne(\App\Models\Service::class,'id','parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(\App\Models\Service::class,'parent_id');
+    }
 
     public function subservices()
     {

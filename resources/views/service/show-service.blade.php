@@ -179,7 +179,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($service->subservices as $sheet)
+                                    @foreach ($service->children as $sheet)
                                         <tr>
                                         <td>{{ $sheet->name }}</td>
                                         <td>{{ $sheet->description }}</td>
@@ -191,7 +191,7 @@
                                     @permission('delete.servicesubs')
 
                                         <td>
-                                            {!! Form::open(array('url' => 'destroysheet/' . $sheet->id, 'class' => 'form-inline', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => trans('servicesmanagement.deleteSheet'))) !!}
+                                            {!! Form::open(array('url' => 'service/' . $sheet->id, 'class' => 'form-inline', 'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => trans('servicesmanagement.deleteSheet'))) !!}
                                             {!! Form::hidden('_method', 'DELETE') !!}
                                             {!! Form::hidden('id', $sheet->id) !!}
                                             {!! Form::hidden('service_id', $sheet->service_id) !!}
@@ -234,9 +234,12 @@
                                         <td>{{ $sheet->name }}</td>
                                         <td>{{ $sheet->description }}</td>
                                         <td>
-                                            <button type="button" data-toggle="modal" data-fileurl="{{ "downloadsheet/".$sheet->image }}" data-target="#confirmDownload" data-title="Download Sheet" data-message="Are you sure you want to download Sheet: {{ $sheet->name }}?" class="btn btn-block btn-outline-primary btn-sm" style="width: 100%;">
-                                                <span class="hidden-xs hidden-sm">Download </span><i aria-hidden="true" class="fa fa-download fa-fw"></i>
-                                            </button>
+                                            @if(Str::length($sheet->image) > 0)
+                                                <button type="button" data-toggle="modal" data-fileurl="{{ "downloadsheet/".$sheet->image }}" data-target="#confirmDownload" data-title="Download Sheet" data-message="Are you sure you want to download Sheet: {{ $sheet->name }}?" class="btn btn-block btn-outline-primary btn-sm" style="width: 100%;">
+                                                    <span class="hidden-xs hidden-sm">Download </span><i aria-hidden="true" class="fa fa-download fa-fw"></i>
+                                                </button>
+
+                                            @endif
                                         </td>
                                         @permission('delete.servicesheets')
                                         <td>
@@ -282,7 +285,7 @@
                                         <td>{{ $procedure->name }}</td>
                                         <td>{{ $procedure->description }}</td>
                                         <td>
-                                            <button type="button" data-toggle="modal" data-fileurl="{{ "downloadsheet".$procedure->image }}" data-target="#confirmDownload" data-title="Download Procedure" data-message="Are you sure you want to download Procedure: {{ $procedure->name }}?" class="btn btn-block btn-outline-primary btn-sm" style="width: 100%;">
+                                            <button type="button" data-toggle="modal" data-fileurl="{{ "downloadsheet/".$procedure->image }}" data-target="#confirmDownload" data-title="Download Procedure" data-message="Are you sure you want to download Procedure: {{ $procedure->name }}?" class="btn btn-block btn-outline-primary btn-sm" style="width: 100%;">
                                                 <span class="hidden-xs hidden-sm">Download </span><i aria-hidden="true" class="fa fa-download fa-fw"></i>
                                             </button>
                                         </td>

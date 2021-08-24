@@ -104,7 +104,7 @@ class ProjectController extends Controller
         $report['actiondate'] = $request->input('actiondate');
         $report['user_id'] = $request->input(Auth::user()->id);
         if ($request->file('image')) {
-            $fileName = time().'_'.$request->image->getClientOriginalName();
+            $fileName = time().'.'.$request->image->getClientOriginalExtension();
             $filePath = $request->file('image')->storeAs('uploads/projects/preports/', $fileName);
             $report['image'] = $fileName;
         }
@@ -116,7 +116,7 @@ class ProjectController extends Controller
 
     public function downloadreport($file){
         $name = $file;
-        $filepath = public_path("storage/uploads/projects/preports/".$file);
+        $filepath = storage_path('app/public/uploads/projects/preports/' . $file);
         $dray = explode('.',$filepath);
         $headers  = array(
             'Content-Type: application/'.$dray[count($dray) - 1],
@@ -147,7 +147,7 @@ class ProjectController extends Controller
 
     public function downloadservice($file){
         $name = $file;
-        $filepath = public_path("storage/uploads/projects/pservices/".$file);
+        $filepath = storage_path('app/public/uploads/projects/pservices/' . $file);
         $dray = explode('.',$filepath);
         $headers  = array(
             'Content-Type: application/'.$dray[count($dray) - 1],
@@ -180,7 +180,7 @@ class ProjectController extends Controller
 
     public function downloadpteam($file){
         $name = $file;
-        $filepath = public_path("storage/uploads/projects/pteams/".$file);
+        $filepath = storage_path('app/public/uploads/projects/pteams/' . $file);
         $dray = explode('.',$filepath);
         $headers  = array(
             'Content-Type: application/'.$dray[count($dray) - 1],

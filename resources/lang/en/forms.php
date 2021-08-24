@@ -42,6 +42,10 @@ return [
      'create_asset_ph_location'    => 'Location',
      'create_asset_icon_location'  => 'fa-map-pin',
 
+     'create_asset_label_category' => 'Category',
+     'create_asset_ph_category'    => 'Category',
+     'create_asset_icon_category'  => 'fa-map-pin',
+
 
      'create_asset_label_description' => 'Description',
      'create_asset_ph_description'    => 'Description',

@@ -67,7 +67,24 @@
                                     @endif
                                 </div>
                             </div>
-
+                            <div class="form-group has-feedback row {{ $errors->has('category') ? ' has-error ' : '' }}">
+                                {!! Form::label('category', trans('forms.create_asset_label_category'), array('class' => 'col-md-3 control-label')); !!}
+                                <div class="col-md-9">
+                                    <div class="input-group">
+                                        {!! Form::text('category', NULL, array('id' => 'category', 'class' => 'form-control', 'placeholder' => trans('forms.create_asset_ph_category'))) !!}
+                                        <div class="input-group-append">
+                                            <label for="category" class="input-group-text">
+                                                <i class="fa fa-fw {{ trans('forms.create_asset_icon_location') }}" aria-hidden="true"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    @if ($errors->has('category'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('category') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
                             <div class="form-group has-feedback row {{ $errors->has('location') ? ' has-error ' : '' }}">
                                 {!! Form::label('location', trans('forms.create_asset_label_location'), array('class' => 'col-md-3 control-label')); !!}
                                 <div class="col-md-9">
